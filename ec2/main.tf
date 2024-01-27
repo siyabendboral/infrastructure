@@ -17,7 +17,7 @@ data "aws_ami" "ubuntu" {
 resource "aws_instance" "web" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t3.micro"
-  subnet_id = data.terraform_remote_state.this.outputs.public_subnets[0]
+  subnet_id = data.terraform_remote_state.vpc.outputs.public_subnets[0]
 
   tags = {
     Name = "HelloWorld"
@@ -32,7 +32,7 @@ output id {
 resource "aws_security_group" "allow_tls" {
   name        = "allow_tls"
   description = "Allow TLS inbound traffic and all outbound traffic"
-  vpc_id      = aws_vpc.main.id
+  vpc_id      = data.terraform_remote_state.vpc.outputs.vpc_id
 
   tags = {
     Name = "allow_tls"
