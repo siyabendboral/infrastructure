@@ -23,3 +23,7 @@ resource "aws_instance" "web" {
     managed_by = "terraform"
   }
 }
+
+output id {
+  value = aws_instance.web.id
+}
